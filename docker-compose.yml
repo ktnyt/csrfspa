@@ -1,0 +1,51 @@
+version: '3.0'
+services:
+  backend:
+    image: python:3.11.4-bookworm
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/.venv
+      - venv_volume:/venv
+    entrypoint: /app/scripts/entrypoint.dev.sh
+    command: poetry run gunicorn csrfspa.wsgi:application --bind 0.0.0.0:8000 --reload
+
+  frontend:
+    image: node:18.8.0-bullseye
+    working_dir: /app
+    volumes:
+      - ./frontend:/app:cached
+      - node_modules_volume:/app/node_modules:cached
+    entrypoint: [ "/app/scripts/entrypoint.dev.sh" ]
+    command: npm run dev -- --host
+    depends_on:
+      - backend
+    init: true
+
+  attacker:
+    image: node:18.8.0-bullseye
+    working_dir: /app
+    volumes:
+      - ./attacker:/app:cached
+      - node_modules_volume:/app/node_modules:cached
+    entrypoint: [ "/app/scripts/entrypoint.dev.sh" ]
+    command: npm run dev -- --host
+    ports:
+      - 6789:3000
+    depends_on:
+      - backend
+    init: true
+
+  nginx:
+    image: nginx:1.23.1-alpine
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:cached
+    ports:
+      - 7890:80
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  venv_volume:
+  node_modules_volume:

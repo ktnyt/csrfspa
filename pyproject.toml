@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "csrfspa"
+version = "0.1.0"
+description = ""
+authors = ["ktnyt <mirei.itaya@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "csrfspa"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.3"
+gunicorn = "^20.1.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+django-stubs = "^4.2.3"
+flake8 = "^6.0.0"
+autopep8 = "^2.0.2"
+isort = "^5.12.0"
+autoflake = "^2.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.autopep8]
+max_line_length = 200
+
+[tool.mypy]
+strict = true
+disable_error_code = ["type-abstract"]
+plugins = ["mypy_django_plugin.main"]
+exclude = [
+]
+
+[tool.django-stubs]
+django_settings_module = "csrfspa.settings"

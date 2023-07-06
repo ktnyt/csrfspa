@@ -1,0 +1,44 @@
+{
+  // Backend Settings
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+
+  "python.formatting.provider": "autopep8",
+
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/.venv/lib/**/site-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/.venv/lib/**/site-packages"
+  ],
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.indexing": true,
+  "python.analysis.packageIndexDepths": [
+    {
+      "name": "django",
+      "depth": 10,
+      "includeAllSymbols": true
+    }
+  ],
+
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": false,
+  "python.linting.enabled": true,
+
+  "copy-github-permalink.branch": "origin/main",
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyPath": "mypy",
+
+  // Frontend Settings
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}
